@@ -1,6 +1,11 @@
 import httpx
+from dotenv import load_dotenv
+import os
 
-API_URL = "http://127.0.0.1:8000"
+load_dotenv()
+
+URL = os.getenv("API_URL")
+API_URL = f"{URL}:8000"
 
 async def register_user(name: str, email: str) -> bool:
     async with httpx.AsyncClient() as client:
