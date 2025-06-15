@@ -4,7 +4,7 @@ import os
 
 load_dotenv()
 
-API_URL = os.getenv("API_URL")
+API_URL = os.getenv("API_URL").rstrip("/")
 
 async def register_user(name: str, email: str) -> bool:
     async with httpx.AsyncClient() as client:
@@ -19,7 +19,7 @@ async def register_user(name: str, email: str) -> bool:
 async def get_all_users(order_by = "id", direction = "asc"):
     async with httpx.AsyncClient() as client:
         try:
-            response = await client.get(f"{API_URL}users", params={"order_by": order_by, "direction": direction})
+            response = await client.get(f"{API_URL}/users", params={"order_by": order_by, "direction": direction})
             if response.status_code == 200:
                 return response.json()
             return []
